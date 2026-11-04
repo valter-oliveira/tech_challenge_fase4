@@ -1,0 +1,28 @@
+# Ambiente
+.venv/
+env/
+venv/
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Saídas geradas (relatórios, gráficos, logs de alerta)
+outputs/*
+!outputs/.gitkeep
+
+# Dados grandes (vídeos/áudios de amostra); os geradores recriam tudo
+dados/amostras/*
+!dados/amostras/.gitkeep
+dados/sinteticos/gerados/
+
+# Pesos de modelos baixados automaticamente pelo ultralytics
+*.pt
+
+# Sistema / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Configuração local do Claude Code
+.claude/
