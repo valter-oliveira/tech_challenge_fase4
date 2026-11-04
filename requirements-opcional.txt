@@ -1,0 +1,7 @@
+# Dependências opcionais (não necessárias para a demonstração padrão)
+
+# Transcrição local quando as credenciais do Azure Speech não estão configuradas
+faster-whisper>=1.0
+
+# Leitura de registros PhysioNet (formato WFDB) para sinais vitais reais
+wfdb>=4.1

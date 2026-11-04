@@ -1,0 +1,31 @@
+# ─── Núcleo numérico / dados ───────────────────────────────────────────────
+numpy>=1.26,<3
+pandas>=2.1
+scipy>=1.11
+scikit-learn>=1.4
+
+# ─── Visualização ──────────────────────────────────────────────────────────
+matplotlib>=3.8
+plotly>=5.20
+
+# ─── Áudio ─────────────────────────────────────────────────────────────────
+librosa>=0.10.2
+soundfile>=0.12
+
+# ─── Vídeo / Visão computacional ───────────────────────────────────────────
+opencv-python>=4.9
+ultralytics>=8.2          # YOLOv8 (detecção de objetos + estimativa de pose)
+
+# ─── Azure Cognitive Services / Azure AI ───────────────────────────────────
+azure-cognitiveservices-speech>=1.40   # Azure Speech to Text
+azure-ai-textanalytics>=5.3            # Azure AI Language (Text Analytics / Text Analytics for health)
+
+# ─── Aplicação ─────────────────────────────────────────────────────────────
+streamlit>=1.35
+python-dotenv>=1.0
+pyyaml>=6.0
+requests>=2.31
+rich>=13.7
+
+# ─── Testes ────────────────────────────────────────────────────────────────
+pytest>=8.0
