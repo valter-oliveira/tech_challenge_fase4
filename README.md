@@ -60,6 +60,19 @@ python main.py dashboard
 Qualquer CSV com as colunas esperadas (ver `monitor_multimodal/config.py` e os CSVs gerados em `dados/sinteticos/gerados/`)
 pode ser passado com `--arquivo`; qualquer `.wav/.mp3` ou `.mp4/.avi/.mov` pode ser analisado com `audio`/`video`.
 
+### Transcrição local de áudios enviados
+
+Para transcrever novos arquivos de áudio sem Azure, instale o provedor local no ambiente virtual:
+
+```bash
+.venv/bin/python -m pip install faster-whisper
+```
+
+Use `MODO_SERVICOS=local` no `.env` e reinicie o painel. Na primeira transcrição, o Whisper baixa o modelo
+`small`; depois, o reconhecimento roda no computador. A análise de sentimento usa regras sobre o texto
+transcrito, separadamente dos indicadores acústicos de fadiga e dispneia. Sem transcrição ou quando a
+análise de texto falhar, o painel mostra o sentimento como indisponível.
+
 ### Configurando o Azure (opcional)
 
 No portal Azure crie um recurso **Speech** e um recurso **Language** e preencha o `.env`:

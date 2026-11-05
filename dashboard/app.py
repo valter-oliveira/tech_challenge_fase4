@@ -192,8 +192,17 @@ with aba_pac:
                 c2.metric("Dispneia", f"{ind['dispneia']:.2f}")
                 c3.metric("Disartria", f"{ind['disartria']:.2f}")
                 tr, tx = a["transcricao"], a["analise_texto"]
-                st.markdown(f"**Transcrição** _(provedor: {tr['provedor']})_: {tr['texto']}")
-                st.markdown(f"**Sentimento** _(provedor: {tx['provedor']})_: **{tx['sentimento']}** {tx['scores_sentimento']}")
+                tem_transcricao = bool(tr.get("texto", "").strip()) and tr.get("provedor") != "nenhum" and not tr.get("erro")
+                if tem_transcricao:
+                    st.markdown(f"**Transcrição** _(provedor: {tr['provedor']})_: {tr['texto']}")
+                else:
+                    st.markdown("**Transcrição**: _indisponível_")
+                if tem_transcricao and tx.get("scores_sentimento") and tx.get("provedor") != "nenhum" and not tx.get("erro"):
+                    st.markdown(f"**Sentimento** _(provedor: {tx['provedor']})_: **{tx['sentimento']}** {tx['scores_sentimento']}")
+                else:
+                    st.markdown("**Sentimento**: _indisponível_")
+                    st.warning("O sentimento depende de uma transcrição válida e de uma análise de texto concluída.")
+                st.caption("O sentimento é calculado a partir do texto transcrito; os indicadores vocais vêm do áudio.")
                 if tx["termos_criticos"]:
                     st.error("Termos críticos: " + ", ".join(tx["termos_criticos"]))
                 if tx["entidades"]:
@@ -298,8 +307,17 @@ with aba_arq:
             c1.metric("Fadiga", f"{r.indicadores['fadiga']:.2f}")
             c2.metric("Dispneia", f"{r.indicadores['dispneia']:.2f}")
             c3.metric("Disartria", f"{r.indicadores['disartria']:.2f}")
-            st.markdown(f"**Transcrição** ({r.transcricao.provedor}): {r.transcricao.texto or '_indisponível_'}")
-            st.markdown(f"**Sentimento** ({r.texto.provedor}): {r.texto.sentimento} {r.texto.scores_sentimento}")
+            tem_transcricao = bool(r.transcricao.texto.strip()) and r.transcricao.provedor != "nenhum" and not r.transcricao.erro
+            if tem_transcricao:
+                st.markdown(f"**Transcrição** ({r.transcricao.provedor}): {r.transcricao.texto}")
+            else:
+                st.markdown("**Transcrição**: _indisponível_")
+            if tem_transcricao and r.texto.scores_sentimento and r.texto.provedor != "nenhum" and not r.texto.erro:
+                st.markdown(f"**Sentimento** ({r.texto.provedor}): {r.texto.sentimento} {r.texto.scores_sentimento}")
+            else:
+                st.markdown("**Sentimento**: _indisponível_")
+                st.warning("O sentimento depende de uma transcrição válida e de uma análise de texto concluída.")
+            st.caption("O sentimento é calculado a partir do texto transcrito; os indicadores vocais vêm do áudio.")
             if r.texto.entidades:
                 st.dataframe(pd.DataFrame(r.texto.entidades), hide_index=True)
             for a in r.alertas:
