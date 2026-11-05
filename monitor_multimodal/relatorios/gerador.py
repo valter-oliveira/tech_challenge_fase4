@@ -143,11 +143,12 @@ def gerar_relatorio_paciente(perfil, resultados: dict[str, Any], pasta: Path | N
         G.grafico_audio({Path(a.arquivo).stem: a.features for a in auds}, {Path(a.arquivo).stem: a.indicadores for a in auds}, pasta / "audio.png")
         for a in auds:
             f, ind, t = a.features, a.indicadores, a.texto
+            entidades = ", ".join(f"{e['texto']} ({e['categoria']})" for e in t.entidades[:10]) or "-"
             md += [f"### `{Path(a.arquivo).name}`", "",
                    f"- Transcrição ({a.transcricao.provedor}, {a.transcricao.n_palavras} palavras): _\"{a.transcricao.texto[:400]}\"_",
                    f"- Sentimento ({t.provedor}): **{t.sentimento}** {t.scores_sentimento}",
                    f"- Termos críticos: {', '.join(t.termos_criticos) or '-'}",
-                   f"- Entidades clínicas: {', '.join(f'{e['texto']} ({e['categoria']})' for e in t.entidades[:10]) or '-'}",
+                   f"- Entidades clínicas: {entidades}",
                    f"- Frases-chave: {', '.join(t.frases_chave[:8]) or '-'}",
                    f"- Biomarcadores: {f.get('taxa_silabica')} síl/s · pausas {100*f.get('razao_pausa', 0):.0f}% ({f.get('pausas_por_min')}/min, média {f.get('duracao_media_pausa_s')}s) · "
                    f"f0 {f.get('f0_mediana_hz')} Hz ± {f.get('f0_desvio_semitons')} st · jitter {f.get('jitter_proxy')} · shimmer {f.get('shimmer_proxy')} · HNR {f.get('hnr_db')} dB",
