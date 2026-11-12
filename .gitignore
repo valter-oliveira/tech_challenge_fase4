@@ -24,5 +24,3 @@ dados/sinteticos/gerados/
 .vscode/
 .idea/
 
-# Configuração local do Claude Code
-.claude/
